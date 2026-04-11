@@ -9,6 +9,13 @@
     <meta property="og:title" content="באלאנס — יחד עם מאניה דפרסיה">
     <meta property="og:description" content="אפליקציה שעוזרת לך לחיות עם מאניה דפרסיה. מעקב מחזורים, שגרות יומיות, ספרינטים עם חברים.">
     <meta property="og:type" content="website">
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "w731auoplz");
+    </script>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -429,7 +436,7 @@
 
     <footer>
         <a href="https://ripper234.com" target="_blank" rel="noopener">רון גרוס</a> · <a href="https://www.linkedin.com/in/gatigno/" target="_blank" rel="noopener">יניב גטיניו</a>
-        <div class="version">v0.4.3</div>
+        <div class="version">v0.4.4</div>
     </footer>
 
 </div>
@@ -441,30 +448,59 @@ const imgs = track.querySelectorAll('img');
 const dots = document.getElementById('carouselDots');
 const label = document.getElementById('carouselLabel');
 
+function trackEvent(name, props = {}) {
+    if (window.clarity) window.clarity('event', name);
+    if (window.goatcounter && typeof window.goatcounter.count === 'function') {
+        window.goatcounter.count({
+            path: location.pathname + '#event-' + name,
+            title: 'event:' + name,
+            event: true
+        });
+    }
+    if (window.clarity && Object.keys(props).length) {
+        Object.entries(props).forEach(([key, value]) => window.clarity('set', key, String(value)));
+    }
+}
+
 imgs.forEach((_, i) => {
     const d = document.createElement('button');
     d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
     d.setAttribute('aria-label', `תמונה ${i + 1}`);
-    d.onclick = () => go(i);
+    d.onclick = () => go(i, 'dot');
     dots.appendChild(d);
 });
 
-function go(i) {
+function go(i, source = 'auto') {
     ci = i < 0 ? imgs.length - 1 : i >= imgs.length ? 0 : i;
     imgs.forEach(img => img.style.transform = `translateX(${ci * 100}%)`);
     dots.querySelectorAll('.carousel-dot').forEach((d, j) => d.classList.toggle('active', j === ci));
     label.textContent = imgs[ci].dataset.label;
+    if (source !== 'auto') trackEvent('carousel_view', { slide: imgs[ci].dataset.label, source });
 }
-function carouselMove(dir) { go(ci + dir); }
+function carouselMove(dir, source = 'button') { go(ci + dir, source); }
 
-setInterval(() => carouselMove(1), 5000);
+setInterval(() => carouselMove(1, 'auto'), 5000);
 
 let sx = 0;
 track.addEventListener('touchstart', e => sx = e.touches[0].clientX, {passive: true});
 track.addEventListener('touchend', e => {
     const d = sx - e.changedTouches[0].clientX;
-    if (Math.abs(d) > 50) carouselMove(d > 0 ? -1 : 1);
+    if (Math.abs(d) > 50) carouselMove(d > 0 ? -1 : 1, 'swipe');
 }, {passive: true});
+
+document.querySelectorAll('.cta-btn').forEach((btn, index) => {
+    btn.addEventListener('click', () => trackEvent('cta_whatsapp_click', {
+        placement: index === 0 ? 'top' : 'bottom'
+    }));
+});
+
+document.querySelectorAll('.pillar').forEach((pillar, index) => {
+    pillar.addEventListener('click', () => {
+        const title = pillar.querySelector('h3')?.textContent?.trim() || `pillar_${index + 1}`;
+        const opened = pillar.classList.contains('open');
+        trackEvent(opened ? 'pillar_close' : 'pillar_open', { pillar: title });
+    });
+});
 </script>
 
 
