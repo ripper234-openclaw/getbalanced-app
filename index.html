@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌈</text></svg>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>באלאנס — יחד עם מאניה דפרסיה</title>
-    <meta name="description" content="באלאנס — אפליקציה שעוזרת לך לחיות עם מאניה דפרסיה. מעקב מחזורים, שגרות יומיות, ספרינטים עם חברים.">
-    <meta property="og:title" content="באלאנס — יחד עם מאניה דפרסיה">
+    <title>באלאנס, יחד עם מאניה דפרסיה</title>
+    <meta name="description" content="באלאנס, אפליקציה שעוזרת לך לחיות עם מאניה דפרסיה. מעקב מחזורים, שגרות יומיות, ספרינטים עם חברים.">
+    <meta property="og:title" content="באלאנס, יחד עם מאניה דפרסיה">
     <meta property="og:description" content="אפליקציה שעוזרת לך לחיות עם מאניה דפרסיה. מעקב מחזורים, שגרות יומיות, ספרינטים עם חברים.">
     <meta property="og:type" content="website">
     <script type="text/javascript">
@@ -44,6 +44,39 @@
             color: var(--text);
             line-height: 1.7;
             -webkit-font-smoothing: antialiased;
+        }
+
+        .lang-toggle {
+            position: fixed;
+            top: 0.9rem;
+            left: 0.9rem;
+            z-index: 10;
+            display: inline-flex;
+            gap: 0.2rem;
+            padding: 0.2rem;
+            background: rgba(255,255,255,0.82);
+            border: 1px solid rgba(0,0,0,0.08);
+            border-radius: 999px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            backdrop-filter: blur(8px);
+        }
+        .lang-toggle button {
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 0.28rem 0.55rem;
+            border-radius: 999px;
+            cursor: pointer;
+        }
+        .lang-toggle button.active {
+            background: var(--accent-light);
+            color: var(--accent);
+        }
+        .lang-toggle button:focus-visible {
+            outline: 2px solid var(--rainbow-end);
+            outline-offset: 2px;
         }
 
         .container {
@@ -266,6 +299,8 @@
         .carousel-btn:focus-visible { outline: 3px solid var(--rainbow-end); outline-offset: 2px; }
         .carousel-btn.prev { right: -18px; }
         .carousel-btn.next { left: -18px; }
+        .lang-en .carousel-btn.prev { left: -18px; right: auto; }
+        .lang-en .carousel-btn.next { right: -18px; left: auto; }
         .carousel-dots {
             display: flex;
             justify-content: center;
@@ -334,17 +369,22 @@
 </head>
 <body>
 
+<div class="lang-toggle" aria-label="Language switcher">
+    <button type="button" id="langHeBtn" class="active">HE</button>
+    <button type="button" id="langEnBtn">EN</button>
+</div>
+
 <div class="container">
 
     <div class="hero">
         <div class="hero-icon">🌈</div>
-        <h1>באלאנס</h1>
-        <p class="tagline">יחד עם מאניה דפרסיה</p>
-        <p class="desc">אפליקציה שעוזרת לך לחיות עם מאניה דפרסיה. מעקב מחזורים, שגרות יומיות ואחריותיות עם חברים.</p>
+        <h1 id="heroTitle">באלאנס</h1>
+        <p class="tagline" id="heroTagline">יחד עם מאניה דפרסיה</p>
+        <p class="desc" id="heroDesc">אפליקציה שעוזרת לך לחיות עם מאניה דפרסיה. מעקב מחזורים, שגרות יומיות ואחריותיות עם חברים.</p>
     </div>
 
     <div class="cta-wrap">
-        <a href="https://wa.me/972526558841?text=היי רון, אני מעוניין/ת לשמוע על באלאנס" class="cta-btn" role="button">אני מעוניין/ת</a>
+        <a href="https://wa.me/972526558841?text=היי רון, אני מעוניין/ת לשמוע על באלאנס" class="cta-btn" role="button" data-wa-he="https://wa.me/972526558841?text=היי רון, אני מעוניין/ת לשמוע על באלאנס" data-wa-en="https://wa.me/972526558841?text=Hi Ron, I%27d love to hear more about Balance" id="topCta"><span id="topCtaText">אני מעוניין/ת</span></a>
     </div>
 
     <div class="video-section">
@@ -354,17 +394,17 @@
                 <source src="https://github.com/ripper234-openclaw/jarvis-public/releases/download/v0.4.0-assets/balance-demo.mp4" type="video/mp4">
             </video>
         </div>
-        <p class="video-caption">סיור של 5 דקות באפליקציה</p>
+        <p class="video-caption" id="videoCaption">סיור של 5 דקות באפליקציה</p>
     </div>
 
     <div class="pillars">
         <div class="pillar" onclick="this.classList.toggle('open')">
             <div class="pillar-icon">🔍</div>
             <div class="pillar-text">
-                <h3>להבין את התמונה</h3>
-                <p>יומן מצב רוח, הצלבה עם שעון חכם, וחילוץ תובנות</p>
+                <h3 id="pillar1Title">להבין את התמונה</h3>
+                <p id="pillar1Summary">יומן מצב רוח, הצלבה עם שעון חכם, וחילוץ תובנות</p>
                 <div class="pillar-expand">
-                    מעקב יומי אחרי מצב רוח, שינה ואנרגיה. הצלבה עם נתונים מהשעון החכם, תרופות ומידע נוסף. זיהוי דפוסים שעוזרים לך ולפסיכיאטר שלך.
+                    <span id="pillar1ExpandText">מעקב יומי אחרי מצב רוח, שינה ואנרגיה. הצלבה עם נתונים מהשעון החכם, תרופות ומידע נוסף. זיהוי דפוסים שעוזרים לך ולפסיכיאטר שלך.</span>
                     <img src="balance-assets/screenshot-04.jpg" alt="דוח מחזורים">
                 </div>
             </div>
@@ -372,10 +412,10 @@
         <div class="pillar" onclick="this.classList.toggle('open')">
             <div class="pillar-icon">🏃</div>
             <div class="pillar-text">
-                <h3>להשתתף בחיים</h3>
-                <p>להתחיל את היום עם כוונה - לא משנה מה הוא מביא</p>
+                <h3 id="pillar2Title">להשתתף בחיים</h3>
+                <p id="pillar2Summary">להתחיל את היום עם כוונה - לא משנה מה הוא מביא</p>
                 <div class="pillar-expand">
-                    צ'קליסט יומי מותאם אישית שאתה בונה בעצמך. כל משימה שמושלמת מרוויחה 🌈 נקודות. שגרות בוקר, בונוס ולילה טוב.
+                    <span id="pillar2ExpandText">צ'קליסט יומי מותאם אישית שאתה בונה בעצמך. כל משימה שמושלמת מרוויחה 🌈 נקודות. שגרות בוקר, בונוס ולילה טוב.</span>
                     <img src="balance-assets/screenshot-07.jpg" alt="צ'קליסט שגרות יומיות">
                 </div>
             </div>
@@ -383,10 +423,10 @@
         <div class="pillar" onclick="this.classList.toggle('open')">
             <div class="pillar-icon">🤝</div>
             <div class="pillar-text">
-                <h3>לא לבד</h3>
-                <p>ספרינטים עם חברים, שיתוף בלי שיפוט</p>
+                <h3 id="pillar3Title">לא לבד</h3>
+                <p id="pillar3Summary">ספרינטים עם חברים, שיתוף בלי שיפוט</p>
                 <div class="pillar-expand">
-                    ספרינטים של 14 יום עם חברים. רואים מה אחרים עושים, מגיבים ומעודדים. עדות הדדית ותחושה משותפת.
+                    <span id="pillar3ExpandText">ספרינטים של 14 יום עם חברים. רואים מה אחרים עושים, מגיבים ומעודדים. עדות הדדית ותחושה משותפת.</span>
                     <img src="balance-assets/screenshot-05.jpg" alt="פיד השראה חברתי">
                 </div>
             </div>
@@ -396,57 +436,155 @@
     <div class="stats">
         <div class="stat">
             <div class="num">15</div>
-            <div class="label">מחזורים</div>
+            <div class="label" id="stat1Label">מחזורים</div>
         </div>
         <div class="stat">
             <div class="num">23.7</div>
-            <div class="label">ימים/מחזור</div>
+            <div class="label" id="stat2Label">ימים/מחזור</div>
         </div>
         <div class="stat">
             <div class="num">34%</div>
-            <div class="label">ימים טובים</div>
+            <div class="label" id="stat3Label">ימים טובים</div>
         </div>
         <div class="stat">
             <div class="num">🌈</div>
-            <div class="label">50 נקודות/יום</div>
+            <div class="label" id="stat4Label">50 נקודות/יום</div>
         </div>
     </div>
 
     <div class="carousel-section">
-        <h2>צילומי מסך</h2>
+        <h2 id="screenshotsTitle">צילומי מסך</h2>
         <div class="carousel" id="mainCarousel">
-            <button class="carousel-btn prev" onclick="carouselMove(1)" aria-label="הקודם">‹</button>
+            <button class="carousel-btn prev" onclick="carouselMove(1)" aria-label="הקודם" id="carouselPrev">‹</button>
             <div class="carousel-track" id="carouselTrack">
-                <img src="balance-assets/screenshot-07.jpg" alt="צ'קליסט שגרה יומית עם נקודות קשת" data-label="שגרות יומיות מותאמות אישית">
-                <img src="balance-assets/screenshot-02.jpg" alt="מסך לילה טוב עם צ'ק-אאוט" data-label="סיום היום בצ'ק-אאוט">
-                <img src="balance-assets/screenshot-05.jpg" alt="פיד השראה חברתי" data-label="מה החברים עושים היום">
-                <img src="balance-assets/screenshot-03.jpg" alt="ספרינטים ואחריותיות" data-label="ספרינטים של 14 יום עם באדי">
-                <img src="balance-assets/screenshot-04.jpg" alt="דוח מחזורים עם סטטיסטיקות" data-label="מעקב מחזורים לאורך זמן">
+                <img src="balance-assets/screenshot-07.jpg" alt="צ'קליסט שגרה יומית עם נקודות קשת" data-label-he="שגרות יומיות מותאמות אישית" data-label-en="Personalized daily routines" data-alt-he="צ'קליסט שגרה יומית עם נקודות קשת" data-alt-en="Daily routine checklist with rainbow points">
+                <img src="balance-assets/screenshot-02.jpg" alt="מסך לילה טוב עם צ'ק-אאוט" data-label-he="סיום היום בצ'ק-אאוט" data-label-en="Closing the day with check-out" data-alt-he="מסך לילה טוב עם צ'ק-אאוט" data-alt-en="Good night screen with check-out">
+                <img src="balance-assets/screenshot-05.jpg" alt="פיד השראה חברתי" data-label-he="מה החברים עושים היום" data-label-en="What friends are doing today" data-alt-he="פיד השראה חברתי" data-alt-en="Social inspiration feed">
+                <img src="balance-assets/screenshot-03.jpg" alt="ספרינטים ואחריותיות" data-label-he="ספרינטים של 14 יום עם באדי" data-label-en="14 day sprints with a buddy" data-alt-he="ספרינטים ואחריותיות" data-alt-en="Sprints and accountability">
+                <img src="balance-assets/screenshot-04.jpg" alt="דוח מחזורים עם סטטיסטיקות" data-label-he="מעקב מחזורים לאורך זמן" data-label-en="Cycle tracking over time" data-alt-he="דוח מחזורים עם סטטיסטיקות" data-alt-en="Cycle report with statistics">
             </div>
-            <button class="carousel-btn next" onclick="carouselMove(-1)" aria-label="הבא">›</button>
+            <button class="carousel-btn next" onclick="carouselMove(-1)" aria-label="הבא" id="carouselNext">›</button>
             <div class="carousel-dots" id="carouselDots"></div>
         </div>
         <div class="carousel-label" id="carouselLabel">שגרות יומיות מותאמות אישית</div>
     </div>
 
     <div class="cta-bottom">
-        <p>מחפשים משתתפים ראשונים. אם אתם חיים עם מאניה דפרסיה ורוצים לנסות — דברו איתנו.</p>
-        <a href="https://wa.me/972526558841?text=היי רון, אני מעוניין/ת לשמוע על באלאנס" class="cta-btn" role="button">אני מעוניין/ת</a>
+        <p id="bottomCtaDesc">מחפשים משתתפים ראשונים. אם אתם חיים עם מאניה דפרסיה ורוצים לנסות, דברו איתנו.</p>
+        <a href="https://wa.me/972526558841?text=היי רון, אני מעוניין/ת לשמוע על באלאנס" class="cta-btn" role="button" data-wa-he="https://wa.me/972526558841?text=היי רון, אני מעוניין/ת לשמוע על באלאנס" data-wa-en="https://wa.me/972526558841?text=Hi Ron, I%27d love to hear more about Balance" id="bottomCta"><span id="bottomCtaText">אני מעוניין/ת</span></a>
     </div>
 
     <footer>
         <a href="https://ripper234.com" target="_blank" rel="noopener">רון גרוס</a> · <a href="https://www.linkedin.com/in/gatigno/" target="_blank" rel="noopener">יניב גטיניו</a>
-        <div class="version">v0.4.5</div>
+        <div class="version">v0.4.6</div>
     </footer>
 
 </div>
 
 <script>
 let ci = 0;
+let currentLang = localStorage.getItem('balanceLang') || 'he';
 const track = document.getElementById('carouselTrack');
 const imgs = track.querySelectorAll('img');
 const dots = document.getElementById('carouselDots');
 const label = document.getElementById('carouselLabel');
+
+const translations = {
+    he: {
+        pageTitle: 'באלאנס, יחד עם מאניה דפרסיה',
+        pageDescription: 'באלאנס, אפליקציה שעוזרת לך לחיות עם מאניה דפרסיה. מעקב מחזורים, שגרות יומיות, ספרינטים עם חברים.',
+        heroTitle: 'באלאנס',
+        heroTagline: 'יחד עם מאניה דפרסיה',
+        heroDesc: 'אפליקציה שעוזרת לך לחיות עם מאניה דפרסיה. מעקב מחזורים, שגרות יומיות ואחריותיות עם חברים.',
+        topCtaText: 'אני מעוניין/ת',
+        bottomCtaText: 'אני מעוניין/ת',
+        videoCaption: 'סיור של 5 דקות באפליקציה',
+        pillar1Title: 'להבין את התמונה',
+        pillar1Summary: 'יומן מצב רוח, הצלבה עם שעון חכם, וחילוץ תובנות',
+        pillar1ExpandText: 'מעקב יומי אחרי מצב רוח, שינה ואנרגיה. הצלבה עם נתונים מהשעון החכם, תרופות ומידע נוסף. זיהוי דפוסים שעוזרים לך ולפסיכיאטר שלך.',
+        pillar2Title: 'להשתתף בחיים',
+        pillar2Summary: 'להתחיל את היום עם כוונה - לא משנה מה הוא מביא',
+        pillar2ExpandText: 'צ\'קליסט יומי מותאם אישית שאתה בונה בעצמך. כל משימה שמושלמת מרוויחה 🌈 נקודות. שגרות בוקר, בונוס ולילה טוב.',
+        pillar3Title: 'לא לבד',
+        pillar3Summary: 'ספרינטים עם חברים, שיתוף בלי שיפוט',
+        pillar3ExpandText: 'ספרינטים של 14 יום עם חברים. רואים מה אחרים עושים, מגיבים ומעודדים. עדות הדדית ותחושה משותפת.',
+        stat1Label: 'מחזורים',
+        stat2Label: 'ימים/מחזור',
+        stat3Label: 'ימים טובים',
+        stat4Label: '50 נקודות/יום',
+        screenshotsTitle: 'צילומי מסך',
+        carouselPrev: 'הקודם',
+        carouselNext: 'הבא',
+        bottomCtaDesc: 'מחפשים משתתפים ראשונים. אם אתם חיים עם מאניה דפרסיה ורוצים לנסות, דברו איתנו.'
+    },
+    en: {
+        pageTitle: 'Balance, together with bipolar',
+        pageDescription: 'An app that helps you live with bipolar. Track cycles, build daily routines, and do sprints with friends.',
+        heroTitle: 'Balance',
+        heroTagline: 'Together with bipolar',
+        heroDesc: 'An app that helps you live with bipolar. Track cycles, build daily routines, and stay accountable with friends.',
+        topCtaText: 'I\'m interested',
+        bottomCtaText: 'I\'m interested',
+        videoCaption: '5 minute product tour',
+        pillar1Title: 'See the bigger picture',
+        pillar1Summary: 'Mood journal, smartwatch correlation, and useful insights',
+        pillar1ExpandText: 'Track mood, sleep, and energy every day. Connect it with smartwatch data, medication, and other signals. Spot patterns that help you and your psychiatrist.',
+        pillar2Title: 'Take part in life',
+        pillar2Summary: 'Start the day with intention, whatever it brings',
+        pillar2ExpandText: 'A personalized daily checklist that you build yourself. Every completed task earns 🌈 points. Morning routines, bonuses, and a good night flow.',
+        pillar3Title: 'Not alone',
+        pillar3Summary: 'Sprints with friends, sharing without judgment',
+        pillar3ExpandText: 'Join 14 day sprints with friends. See what others are doing, react, and encourage each other. Shared witness, shared momentum.',
+        stat1Label: 'cycles',
+        stat2Label: 'days/cycle',
+        stat3Label: 'good days',
+        stat4Label: '50 points/day',
+        screenshotsTitle: 'Screenshots',
+        carouselPrev: 'Previous',
+        carouselNext: 'Next',
+        bottomCtaDesc: 'Looking for early participants. If you live with bipolar and want to try it, talk to us.'
+    }
+};
+
+function applyLanguage(lang) {
+    currentLang = lang;
+    localStorage.setItem('balanceLang', lang);
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'he' ? 'rtl' : 'ltr';
+    document.body.classList.toggle('lang-en', lang === 'en');
+
+    Object.entries(translations[lang]).forEach(([id, text]) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (id === 'carouselPrev' || id === 'carouselNext') {
+            el.setAttribute('aria-label', text);
+            return;
+        }
+        el.textContent = text;
+    });
+
+    document.title = translations[lang].pageTitle;
+    document.querySelector('meta[name="description"]')?.setAttribute('content', translations[lang].pageDescription);
+    document.querySelector('meta[property="og:title"]')?.setAttribute('content', translations[lang].pageTitle);
+    document.querySelector('meta[property="og:description"]')?.setAttribute('content', translations[lang].pageDescription);
+
+    document.querySelectorAll('.cta-btn').forEach(btn => {
+        const href = btn.dataset[`wa${lang === 'he' ? 'He' : 'En'}`];
+        if (href) btn.href = href;
+    });
+
+    imgs.forEach((img, index) => {
+        img.dataset.label = img.dataset[`label${lang === 'he' ? 'He' : 'En'}`];
+        const alt = img.dataset[`alt${lang === 'he' ? 'He' : 'En'}`];
+        if (alt) img.alt = alt;
+        const dot = dots.querySelectorAll('.carousel-dot')[index];
+        if (dot) dot.setAttribute('aria-label', lang === 'he' ? `תמונה ${index + 1}` : `Image ${index + 1}`);
+    });
+
+    document.getElementById('langHeBtn').classList.toggle('active', lang === 'he');
+    document.getElementById('langEnBtn').classList.toggle('active', lang === 'en');
+    go(ci, 'auto');
+}
 
 function trackEvent(name, props = {}) {
     if (window.clarity) window.clarity('event', name);
@@ -479,6 +617,9 @@ function go(i, source = 'auto') {
 }
 function carouselMove(dir, source = 'button') { go(ci + dir, source); }
 
+document.getElementById('langHeBtn').addEventListener('click', () => applyLanguage('he'));
+document.getElementById('langEnBtn').addEventListener('click', () => applyLanguage('en'));
+
 setInterval(() => carouselMove(1, 'auto'), 5000);
 
 let sx = 0;
@@ -501,6 +642,8 @@ document.querySelectorAll('.pillar').forEach((pillar, index) => {
         trackEvent(opened ? 'pillar_close' : 'pillar_open', { pillar: title });
     });
 });
+
+applyLanguage(currentLang === 'en' ? 'en' : 'he');
 </script>
 
 
