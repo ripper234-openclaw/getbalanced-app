@@ -270,6 +270,7 @@
         .carousel-track {
             display: flex;
             overflow: hidden;
+            direction: ltr;
             border-radius: var(--radius);
             box-shadow: var(--shadow), 0 8px 24px rgba(0,0,0,0.08);
             border: 1px solid rgba(0,0,0,0.06);
@@ -475,7 +476,7 @@
     </div>
 
     <footer>
-        <a href="https://ripper234.com" target="_blank" rel="noopener">רון גרוס</a> · <a href="https://www.linkedin.com/in/gatigno/" target="_blank" rel="noopener">יניב גטיניו</a>
+        <a href="https://ripper234.com" target="_blank" rel="noopener" id="footerRon">רון גרוס</a> · <a href="https://www.linkedin.com/in/gatigno/" target="_blank" rel="noopener" id="footerYaniv">יניב גטיניו</a>
         <div class="version">v0.4.6</div>
     </footer>
 
@@ -515,7 +516,9 @@ const translations = {
         screenshotsTitle: 'צילומי מסך',
         carouselPrev: 'הקודם',
         carouselNext: 'הבא',
-        bottomCtaDesc: 'מחפשים משתתפים ראשונים. אם אתם חיים עם מאניה דפרסיה ורוצים לנסות, דברו איתנו.'
+        bottomCtaDesc: 'מחפשים משתתפים ראשונים. אם אתם חיים עם מאניה דפרסיה ורוצים לנסות, דברו איתנו.',
+        footerRon: 'רון גרוס',
+        footerYaniv: 'יניב גטיניו'
     },
     en: {
         pageTitle: 'Balance, together with bipolar',
@@ -542,7 +545,9 @@ const translations = {
         screenshotsTitle: 'Screenshots',
         carouselPrev: 'Previous',
         carouselNext: 'Next',
-        bottomCtaDesc: 'Looking for early participants. If you live with bipolar and want to try it, talk to us.'
+        bottomCtaDesc: 'Looking for early participants. If you live with bipolar and want to try it, talk to us.',
+        footerRon: 'Ron Gross',
+        footerYaniv: 'Yaniv Gatigno'
     }
 };
 
@@ -610,7 +615,7 @@ imgs.forEach((_, i) => {
 
 function go(i, source = 'auto') {
     ci = i < 0 ? imgs.length - 1 : i >= imgs.length ? 0 : i;
-    imgs.forEach(img => img.style.transform = `translateX(${ci * 100}%)`);
+    imgs.forEach(img => img.style.transform = `translateX(${-ci * 100}%)`);
     dots.querySelectorAll('.carousel-dot').forEach((d, j) => d.classList.toggle('active', j === ci));
     label.textContent = imgs[ci].dataset.label;
     if (source !== 'auto') trackEvent('carousel_view', { slide: imgs[ci].dataset.label, source });
