@@ -566,7 +566,8 @@ function applyLanguage(lang) {
             el.setAttribute('aria-label', text);
             return;
         }
-        el.textContent = text;
+        if (text.includes('<br>')) el.innerHTML = text;
+        else el.textContent = text;
     });
 
     document.title = translations[lang].pageTitle;
